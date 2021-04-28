@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Happy Meals</title>
 </head>
@@ -19,31 +18,27 @@
         <!-- modal -->
         <div id="recipe-form-modal" class="modal">
             <div class="modal-content">
-                <!-- <div class="modal-form-container"> -->
-                    <form>
-                        <label for="modalMainIngredient">Main Ingredient</label>
-                        <input type="text" id="modalMainIngredient" class="form-control" placeholder="Chicken" autocomplate="off" />
-                        <label for="modalCategory">Meal Category</label>
-                        <select name="category" id="category">
-                            <option value="Select a Category"></option>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Dessert">Dessert</option>
-                            <option value="Side">Side</option>
-                            <option value="Starter">Starter</option>
-                            <option value="Vegan">Vegan</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                        </select>
-                    </form>
-                <!-- </div> -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-search">Search Recipes</button>
-                    </div>
+                <form>
+                    <label for="modalMainIngredient">Main Ingredient</label>
+                    <input type="text" id="modalMainIngredient" class="form-control" placeholder="Chicken" autocomplate="off" />
+                    <label for="modalCategory">Meal Category</label>
+                    <select name="category" id="category">
+                        <option value="Select a Category"></option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Dessert">Dessert</option>
+                        <option value="Side">Side</option>
+                        <option value="Starter">Starter</option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                    </select>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-search">Search Recipes</button>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>   
+    </div> 
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
