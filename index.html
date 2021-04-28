@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Happy Meals</title>
 </head>
 <body>
     
     <!-- Modal -->
-    <div id="recipe-form-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="recipe-form-modal">Find New Recipe</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-labe="close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
+    <div class="modal-container">
+        <h3 class="modal-title">Recipes</h3>
+        <!-- trigger/open the modal -->
+        <button id="btn-open-modal" type="button">Find New Recipe</button>
+
+        <!-- modal -->
+        <div id="recipe-form-modal" class="modal">
+            <div class="modal-content">
+                <!-- <div class="modal-form-container"> -->
+                    <form>
                         <label for="modalMainIngredient">Main Ingredient</label>
                         <input type="text" id="modalMainIngredient" class="form-control" placeholder="Chicken" autocomplate="off" />
-                    </div>
-                    <div class="form-group">
                         <label for="modalCategory">Meal Category</label>
                         <select name="category" id="category">
                             <option value="Select a Category"></option>
@@ -33,12 +33,12 @@
                             <option value="Vegan">Vegan</option>
                             <option value="Vegetarian">Vegetarian</option>
                         </select>
+                    </form>
+                <!-- </div> -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-search">Search Recipes</button>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-search">Find Recipe</button>
             </div>
         </div>
     </div>

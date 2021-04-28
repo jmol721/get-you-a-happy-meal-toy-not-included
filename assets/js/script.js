@@ -1,24 +1,42 @@
-// modal is triggered
-$("#recipe-form-modal").on("show.bs.modal", function() {
+var recipeModalEl = document.querySelector("#recipe-form-modal");
+var openModalEl = document.querySelector("#btn-open-modal");
+var closeModalEl = document.querySelector(".btn-close");
+var modalMainIngredientEl = document.querySelector("#modalMainIngredient");
+var modalMealCategoryEl = document.querySelector("#category");
+var searchRecipeEl = document.querySelector(".btn-search");
+
+
+//modal is triggered
+openModalEl.addEventListener("click", function(){
+    // open modal
+    recipeModalEl.style.display="block";
+
     // clear value for next search
-    $("#modalMainIngredient").val("");
+    modalMainIngredientEl.value="";
+    
+    // highlight input area
 });
 
-// modal is fully visible
-$("#recipe-form-modal").on("shown.bs.modal", function() {
-    //highlight input area
-    $("#modalMainIngredient").trigger("focus");
+// close the modal
+closeModalEl.addEventListener("click", function() {
+
+    // save recipe in recipeHistory array
+
+    // save to localStorage
+
+    recipeModalEl.style.display="none";
 });
 
 // find recipe button in modal clicked
-$("#recipe-form-modal .btn-search").click(function() {
+searchRecipeEl.addEventListener("click", function() {
     // get user input values
-    var mainIngredient = $("#modalMainIngredient").val().trim();
-    var mealCategory = $("#category").val();
+    var mainIngredient = modalMainIngredientEl.value;
+    var mealCategory = modalMealCategoryEl.value;
     console.log(mainIngredient, mealCategory);
 
     // use values to search API for data
     getRecipes(mainIngredient, mealCategory);
+    getGif(mainIngredient);
 });
 
 var getRecipes = function(ingredient, category) {
@@ -61,5 +79,16 @@ var getGif = function(ingredient) {
         })
 
     // display GIF
+
+}
+
+
+// save recipe to localStorage
+var saveRecipes = function () {
+
+}
+
+// load recipes from localStorate
+var loadRecipes = function () {
 
 }
