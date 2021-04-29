@@ -12,16 +12,17 @@
     <div class="modal-container">
         <h3 class="modal-title">Recipes</h3>
         <!-- trigger/open the modal -->
-        <button id="btn-open-modal" type="button">Find New Recipe</button>
+        <button id="btn-open-modal" class="btn" type="button">Find New Recipe</button>
 
         <!-- modal -->
         <div id="recipe-form-modal" class="modal">
             <div class="modal-content">
                 <form>
+                    <h3>Search by:</h3>
                     <label for="modalMainIngredient">Main Ingredient</label>
-                    <input type="text" id="modalMainIngredient" class="form-control" placeholder="Chicken" autocomplate="off" />
+                    <input type="text" id="modalMainIngredient" class="form-control" placeholder="Chicken" autocomplate="off" /><span> or </span><br>
                     <label for="modalCategory">Meal Category</label>
-                    <select name="category" id="category">
+                    <select name="category" id="category" class="form-control">
                         <option value="Select a Category"></option>
                         <option value="Breakfast">Breakfast</option>
                         <option value="Dessert">Dessert</option>
@@ -32,8 +33,8 @@
                     </select>
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-search">Search Recipes</button>
+                    <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
