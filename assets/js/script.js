@@ -13,17 +13,10 @@ openModalEl.addEventListener("click", function(){
 
     // clear value for next search
     modalMainIngredientEl.value="";
-    
-    // highlight input area
 });
 
 // close the modal
 closeModalEl.addEventListener("click", function() {
-
-    // save recipe in recipeHistory array
-
-    // save to localStorage
-
     recipeModalEl.style.display="none";
 });
 
