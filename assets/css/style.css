@@ -1,3 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+/* hero section */
+.hero {
+  background-image: url("../Images/People-Laughing-at-Dinner-Table.jpeg");
+  height: 600px;
+  width: 100%;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+}
+.hero-cta {
+  text-align: center;
+  color: #fff;
+  font-size: 30px;
+  text-shadow: 0 0 10px rgba(0,0,0,0.7);
+
+}
+.hero h1 {
+  font-size: 75px;
+}
 /* modal style */
 .modal {
     display: none;
