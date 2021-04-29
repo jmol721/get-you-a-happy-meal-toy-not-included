@@ -1,9 +1,17 @@
+// modal elements
 var recipeModalEl = document.querySelector("#recipe-form-modal");
 var openModalEl = document.querySelector("#btn-open-modal");
 var closeModalEl = document.querySelector(".btn-close");
 var modalMainIngredientEl = document.querySelector("#modalMainIngredient");
 var modalMealCategoryEl = document.querySelector("#category");
 var searchRecipeEl = document.querySelector(".btn-search");
+
+// search results/recipe elements
+var resultsContainerEl = document.querySelector("#results-container");
+var recipeTitleEl = document.querySelector("#recipe-title");
+var ingredientsListEl = document.querySelector("#ingredients");
+var instructionsListEl = document.querySelector("#instructions");
+var mainIngredient = "";
 
 
 //modal is triggered
@@ -23,7 +31,7 @@ closeModalEl.addEventListener("click", function() {
 // find recipe button in modal clicked
 searchRecipeEl.addEventListener("click", function() {
     // get user input values
-    var mainIngredient = modalMainIngredientEl.value;
+    mainIngredient = modalMainIngredientEl.value;
     var mealCategory = modalMealCategoryEl.value;
     console.log(mainIngredient, mealCategory);
 
@@ -42,6 +50,9 @@ var getRecipes = function(ingredient, category) {
         })
         .then(function(data) {
             console.log(data);
+            displayRecipeList(data);
+            // will be deleted after testing
+            displayRecipe(data);
         })
 
     // display search results
@@ -49,11 +60,98 @@ var getRecipes = function(ingredient, category) {
     // capture user's option and send to new function displaying chosen recipe
 }
 
-var displayRecipe = function(recipe) {
-    // list ingredients
+var displayRecipeList = function (data) {
+    for (var i = 0; i < data.meals.length; i++) {
+        console.log(data.meals[i].strMeal + " " + data.meals[i].idMeal);
 
-    // list recipe instructions
+        // add text content to heading: Choose a recipe to try!
+
+        // create list links or buttons of options
+    }
 }
+
+
+// addEventListener for user's click/choice from the recipe list
+// send id number to getRecipe [getRecipe(mealId)]
+
+
+// find recipe by id number to load recipe book/favorites
+var getRecipe = function (mealId) {
+    var apiUrl = "https://www.themealdb.com/api/json/v1/1/lookup.php?i="
+
+    fetch(apiUrl + mealId)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log(data);
+            // send recipe to be displayed
+            displayRecipe(data);
+        })
+}
+
+// display chosen recipe in results container
+var displayRecipe = function(recipe) {
+    console.log(recipe.meals[0]);
+    var mealName = recipe.meals[0].strMeal;
+    console.log (mealName);
+    var mealId = recipe.meals[0].idMeal;
+    console.log(mealId);
+
+    var ingredientList = [];
+    var measurementList = [];
+
+    // get ingredients and measurements
+    for (var i = 1; i < 21; i++) {
+        var ingredients = recipe.meals[0]["strIngredient"+i];
+        var measurements = recipe.meals[0]["strMeasure"+i];
+        ingredientList.push(ingredients);
+        measurementList.push(measurements);
+    }
+
+    // display measurements and ingredients
+    for (var i = 0; i < ingredientList.length; i++) {
+        if (ingredientList[i] !== "") {
+            var recipeAmt = document.createElement("li");
+            recipeAmt.textContent = measurementList[i] + "  " + ingredientList[i];
+            ingredientsListEl.appendChild(recipeAmt);
+        }
+    }
+
+    // get instructions from API data
+    var instructions = recipe.meals[0].strInstructions;
+    console.log(instructions);
+    var paragraphs = instructions.split(".");
+
+    // display dish title
+    recipeTitleEl.textContent = mealName;
+
+    // display ingredients
+    ingredientsListEl.innerHTML = "Ingredients";
+
+    // display instructions
+    instructionsListEl.innerHTML = "Instructions:";
+        for (var i = 0; i < paragraphs.length; i++) {
+            var instructions = document.createElement("li");
+            instructions.textContent = paragraphs[i];   
+            instructionsListEl.appendChild(instructions);
+        }
+
+    // get image from API data
+    var imgSrc = recipe.meals[0].strMealThumb;
+    var mealImg = document.createElement("img");
+    mealImg.setAttribute("src", imgSrc);
+
+    // display image  (can be changed. just for now as a placeholder)
+    mealImg.setAttribute("width", "300px");
+    mealImg.setAttribute("height", "260px");  
+    resultsContainerEl.appendChild(mealImg);
+
+    // create buttons: save to recipe box or back to list
+}
+
+// will delete after testing
+getRecipe("52795");
 
 var getJoke = function(ingredient) {
     var apiUrl = "";
