@@ -15,21 +15,21 @@ var mainIngredient = "";
 
 
 //modal is triggered
-openModalEl.addEventListener("click", function(){
+openModalEl.addEventListener("click", function () {
     // open modal
-    recipeModalEl.style.display="block";
+    recipeModalEl.style.display = "block";
 
     // clear value for next search
-    modalMainIngredientEl.value="";
+    modalMainIngredientEl.value = "";
 });
 
 // close the modal
-closeModalEl.addEventListener("click", function() {
-    recipeModalEl.style.display="none";
+closeModalEl.addEventListener("click", function () {
+    recipeModalEl.style.display = "none";
 });
 
 // find recipe button in modal clicked
-searchRecipeEl.addEventListener("click", function() {
+searchRecipeEl.addEventListener("click", function () {
     // get user input values
     mainIngredient = modalMainIngredientEl.value;
     var mealCategory = modalMealCategoryEl.value;
@@ -40,15 +40,15 @@ searchRecipeEl.addEventListener("click", function() {
     getGif(mainIngredient);
 });
 
-var getRecipes = function(ingredient, category) {
+var getRecipes = function (ingredient, category) {
     // search mealdb API for recipes with main ingredient
     var apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
 
     fetch(apiUrl + "?s=" + ingredient)
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             console.log(data);
             displayRecipeList(data);
             // will be deleted after testing
@@ -80,10 +80,10 @@ var getRecipe = function (mealId) {
     var apiUrl = "https://www.themealdb.com/api/json/v1/1/lookup.php?i="
 
     fetch(apiUrl + mealId)
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             console.log(data);
             // send recipe to be displayed
             displayRecipe(data);
@@ -91,10 +91,10 @@ var getRecipe = function (mealId) {
 }
 
 // display chosen recipe in results container
-var displayRecipe = function(recipe) {
+var displayRecipe = function (recipe) {
     console.log(recipe.meals[0]);
     var mealName = recipe.meals[0].strMeal;
-    console.log (mealName);
+    console.log(mealName);
     var mealId = recipe.meals[0].idMeal;
     console.log(mealId);
 
@@ -103,8 +103,8 @@ var displayRecipe = function(recipe) {
 
     // get ingredients and measurements
     for (var i = 1; i < 21; i++) {
-        var ingredients = recipe.meals[0]["strIngredient"+i];
-        var measurements = recipe.meals[0]["strMeasure"+i];
+        var ingredients = recipe.meals[0]["strIngredient" + i];
+        var measurements = recipe.meals[0]["strMeasure" + i];
         ingredientList.push(ingredients);
         measurementList.push(measurements);
     }
@@ -131,11 +131,11 @@ var displayRecipe = function(recipe) {
 
     // display instructions
     instructionsListEl.innerHTML = "Instructions:";
-        for (var i = 0; i < paragraphs.length; i++) {
-            var instructions = document.createElement("li");
-            instructions.textContent = paragraphs[i];   
-            instructionsListEl.appendChild(instructions);
-        }
+    for (var i = 0; i < paragraphs.length; i++) {
+        var instructions = document.createElement("li");
+        instructions.textContent = paragraphs[i];
+        instructionsListEl.appendChild(instructions);
+    }
 
     // get image from API data
     var imgSrc = recipe.meals[0].strMealThumb;
@@ -144,7 +144,7 @@ var displayRecipe = function(recipe) {
 
     // display image  (can be changed. just for now as a placeholder)
     mealImg.setAttribute("width", "300px");
-    mealImg.setAttribute("height", "260px");  
+    mealImg.setAttribute("height", "260px");
     resultsContainerEl.appendChild(mealImg);
 
     // create buttons: save to recipe box or back to list
@@ -153,23 +153,32 @@ var displayRecipe = function(recipe) {
 // will delete after testing
 getRecipe("52795");
 
-var getJoke = function(ingredient) {
+var getJoke = function (ingredient) {
     var apiUrl = "";
 }
 
-var getGif = function(ingredient) {
+var getGif = function (ingredient) {
     // search GIPHY API for ingredient related GIFs
     var apiUrl = "https://api.giphy.com/v1/gifs/search";
 
-    fetch(apiUrl + "?=" + ingredient + "&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1")
-        .then(function(response) {
+    fetch(apiUrl + "?q=" + ingredient + "&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1")
+        .then(function (response) {
             return response.json();
         })
-        .then(function(response) {
-            console.log(response.data[0]);
+        .then(function (response) {
+            // display gif
+            if (response.data.length === 0) {
+                console.log('Giphy could not find anything for that.');
+            } else {
+                console.log(response.data[0]);
+                var gifContainerEl = document.querySelector('#gif-container');
+                gifContainerEl.innerHTML = '';
+                var gifImg = document.createElement('img');
+                gifImg.setAttribute('src', response.data[0].images.fixed_height.url);
+                gifContainerEl.appendChild(gifImg);
+            }
         })
 
-    // display GIF
 
 }
 
