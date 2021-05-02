@@ -155,6 +155,7 @@ getRecipe("52795");
 
 var getJoke = function (ingredient) {
     var apiUrl = "";
+
 }
 
 var getGif = function (ingredient) {
