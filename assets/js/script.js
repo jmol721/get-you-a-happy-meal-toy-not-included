@@ -15,9 +15,9 @@ var mainIngredient = "";
 
 
 //modal is triggered
-openModalEl.addEventListener("click", function(){
+openModalEl.addEventListener("click", function () {
     // open modal
-    recipeModalEl.style.display="block";
+    recipeModalEl.style.display = "block";
 
     // clear value for next search
     modalMainIngredientEl.value="";
@@ -29,7 +29,7 @@ closeModalEl.addEventListener("click", function() {
 });
 
 // find recipe button in modal clicked
-searchRecipeEl.addEventListener("click", function() {
+searchRecipeEl.addEventListener("click", function () {
     // get user input values
     mainIngredient = modalMainIngredientEl.value;
     var mealCategory = modalMealCategoryEl.value;
@@ -38,17 +38,18 @@ searchRecipeEl.addEventListener("click", function() {
     // use values to search API for data
     getRecipes(mainIngredient, mealCategory);
     getGif(mainIngredient);
+    getJoke();
 });
 
-var getRecipes = function(ingredient, category) {
+var getRecipes = function (ingredient, category) {
     // search mealdb API for recipes with main ingredient
     var apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
 
     fetch(apiUrl + "?s=" + ingredient)
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
             console.log(data);
             displayRecipeList(data);
             // will be deleted after testing
@@ -157,15 +158,15 @@ var getJoke = function(ingredient) {
     var apiUrl = "";
 }
 
-var getGif = function(ingredient) {
+var getGif = function (ingredient) {
     // search GIPHY API for ingredient related GIFs
     var apiUrl = "https://api.giphy.com/v1/gifs/search";
 
     fetch(apiUrl + "?=" + ingredient + "&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1")
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(response) {
+        .then(function (response) {
             console.log(response.data[0]);
         })
 
