@@ -38,6 +38,7 @@ searchRecipeEl.addEventListener("click", function () {
     // use values to search API for data
     getRecipes(mainIngredient, mealCategory);
     getGif(mainIngredient);
+    getJoke();
 });
 
 var getRecipes = function (ingredient, category) {
@@ -154,8 +155,15 @@ var displayRecipe = function (recipe) {
 getRecipe("52795");
 
 var getJoke = function (ingredient) {
-    var apiUrl = "";
+    var apiUrl = "https://api.chucknorris.io/jokes/random";
 
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.value)
+            var jokeContainerEl = document.querySelector("#joke-div");
+            jokeContainerEl.innerHTML = data.value;
+        });
 }
 
 var getGif = function (ingredient) {
@@ -168,6 +176,7 @@ var getGif = function (ingredient) {
         })
         .then(function (response) {
             // display gif
+            console.log(response);
             if (response.data.length === 0) {
                 console.log('Giphy could not find anything for that.');
             } else {
