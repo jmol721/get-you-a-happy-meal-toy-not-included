@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Happy Meals</title>
 </head>
@@ -18,12 +19,17 @@
         </div>
     </section>
 
-    <!-- Modal -->
-    <div class="modal-container">
-        <h3 class="modal-title">Recipes</h3>
-        <!-- trigger/open the modal -->
-        <button id="btn-open-modal" class="btn" type="button">Find New Recipe</button>
+    <!-- big container holding both smaller containers -->
+    <div class="grid-x">
+        <!-- main left container -->
+        <div class="cell medium-6 large-3" id="left-container">
+            <!-- Modal -->
+            <div class="modal-container">
+                <h3 class="modal-title">Recipes</h3>
+                <!-- trigger/open the modal -->
+                <button id="btn-open-modal" class="btn" type="button">Find New Recipe</button>
 
+<<<<<<< HEAD
         <!-- modal -->
         <div id="recipe-form-modal" class="modal">
             <div class="modal-content">
@@ -46,17 +52,67 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-search">Search Recipes</button>
                     <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
+=======
+                <!-- modal -->
+                <div id="recipe-form-modal" class="modal">
+                    <div class="modal-content">
+                        <form>
+                            <h3>Search by:</h3>
+                            <label for="modalMainIngredient">Main Ingredient</label>
+                            <input type="text" id="modalMainIngredient" class="form-control" placeholder="Chicken" autocomplate="off" /><span> or </span><br>
+                            <label for="modalCategory">Meal Category</label>
+                            <select name="category" id="category" class="form-control">
+                                <option value="Select a Category"></option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Dessert">Dessert</option>
+                                <option value="Side">Side</option>
+                                <option value="Starter">Starter</option>
+                                <option value="Vegan">Vegan</option>
+                                <option value="Vegetarian">Vegetarian</option>
+                            </select>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-search">Search Recipes</button>
+                            <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+>>>>>>> 6fc30e4e4aaabb2a0afc4789cdded4bb20b5a8f6
                 </div>
+            </div> 
+            <!-- recipe box div -->
+            <div id="recipe-box">
+                <h3>My recipe stash:</h3>
             </div>
         </div>
+        <!-- main right container -->
+        <div class="cell medium-6 large-6" id="right-container">
+            <!-- recipe results display -->
+            <div id="results-container">
+                <h3 id="recipe-title"></h3>
+                <ul id="ingredients"></ul>
+                <ol id="instructions"></ol>
+            </div>
+        </div>
+        <div class="cell medium-6 large-3">
+            <!-- joke div -->
+            <div id="joke-div">
+                <p>Joke</p>
+            </div>
+            <!-- gif div -->
+            <div id="gif-container">
+                <p>Gif</p>
+            </div>
+        </div>
+<<<<<<< HEAD
     </div>
     <!-- recipe results display -->
     <div id="results-container">
         <h3 id="recipe-title"></h3>
         <ul id="ingredients"></ul>
         <ol id="instructions"></ol>
+=======
+>>>>>>> 6fc30e4e4aaabb2a0afc4789cdded4bb20b5a8f6
     </div>
-
     <script src="./assets/js/script.js"></script>
 </body>
 
