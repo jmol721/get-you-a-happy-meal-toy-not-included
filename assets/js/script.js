@@ -37,6 +37,8 @@ searchRecipeEl.addEventListener("click", function () {
     var mealCategory = modalMealCategoryEl.value;
     console.log(mainIngredient, mealCategory);
 
+    recipeModalEl.style.display = "none";
+
     // use values to search API for data
     getRecipes(mainIngredient, mealCategory);
     getGif(mainIngredient);
@@ -45,7 +47,7 @@ searchRecipeEl.addEventListener("click", function () {
 
 var getRecipes = function (ingredient, category) {
     // search mealdb API for recipes with main ingredient
-    //if (ingredient !== "") {
+    if (ingredient !== null) {
     var apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
 
     fetch(apiUrl + "?s=" + ingredient)
@@ -56,29 +58,34 @@ var getRecipes = function (ingredient, category) {
             console.log(data);
             displayRecipeList(data);
         })
-    //}
-
-    //if (category !== "") {
+    }
+    //else if (category !== "Select a Category") {
     // search mealdb API for recipes by category
-    // var apiUrlCat = "https://www.themealdb.com/api/json/v1/1/filter.php?c=";
+    var apiUrlCat = "https://www.themealdb.com/api/json/v1/1/filter.php?c=";
 
-    // fetch(apiUrlCat + category)
-    //     .then(function (response) {
-    //         return response.json();
-    //     })
-    //     .then(function (data) {
-    //         console.log(data);
-    //         displayRecipeList(data);
-    //     })
-    // }
+    fetch(apiUrlCat + category)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            displayRecipeList(data);
+        })
+
+        getGif(category);
+     //}
+    //  else {
+    //      console.log("Enter a main ingredient or category");
+    //  }
+
 }
 
 // display search results
 // capture user's option and send to new function displaying chosen recipe
 var displayRecipeList = function (data) {
-    
-    // clear previous recipe before displaying search results list
 
+    // clear previous search results list
+    listDisplayEl.innerHTML = "";
 
     for (var i = 0; i < data.meals.length; i++) {
         // add text content to heading: Choose a recipe to try!
@@ -148,7 +155,7 @@ var displayRecipe = function (recipe) {
     ingredientsListEl.innerHTML = "Ingredients";
 
     for (var i = 0; i < ingredientList.length; i++) {
-        if (ingredientList[i] !== "") {
+        if (ingredientList[i] !== null) {
             var recipeAmt = document.createElement("li");
             recipeAmt.textContent = measurementList[i] + "  " + ingredientList[i];
             ingredientsListEl.appendChild(recipeAmt);
@@ -195,13 +202,23 @@ var displayRecipe = function (recipe) {
     // when user clicks add recipe button, save to recipeStash []
     addRecipe.addEventListener("click", function() {
         console.log("click add");
+        // create recipe object
+        var recipeObj = { name: mealName, id: mealId};
+        // push object to recipeStash []
+        recipeStash.push(recipeObj);
+        console.log("recipe Stash", recipeStash);
     });
 
     // when user clicks return to list, send user back to search results
     returnList.addEventListener("click", function() {
-        console.log("click return");
+        // clear previous recipe before displaying search results list
+        recipeTitleEl.textContent = "";
+        imageContainerEl.innerHTML = "";
+        ingredientsListEl.innerHTML = ""; 
+        instructionsListEl.innerHTML = "";
+        saveBtnContainerEl.innerHTML = "";
+
         getRecipes(mainIngredient,"");
-        //displayRecipeList(mealCategory);
     });
 }
 

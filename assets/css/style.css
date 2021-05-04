@@ -72,6 +72,11 @@
   outline: none;
 }
 
+form label {
+  color: #ffffff;
+  font-weight: bold;
+}
+
 /* modal buttons style */
 
 .modal-footer {
