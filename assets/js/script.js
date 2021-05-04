@@ -14,6 +14,7 @@ var instructionsListEl = document.querySelector("#instructions");
 var mainIngredient = "";
 var listDisplayEl = document.getElementById("list-display");
 
+var recipeStash = [];
 
 //modal is triggered
 openModalEl.addEventListener("click", function () {
@@ -44,6 +45,7 @@ searchRecipeEl.addEventListener("click", function () {
 
 var getRecipes = function (ingredient, category) {
     // search mealdb API for recipes with main ingredient
+    //if (ingredient !== "") {
     var apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
 
     fetch(apiUrl + "?s=" + ingredient)
@@ -53,18 +55,32 @@ var getRecipes = function (ingredient, category) {
         .then(function (data) {
             console.log(data);
             displayRecipeList(data);
-            // will be deleted after testing
-            displayRecipe(data);
         })
+    //}
 
-    // display search results
-    // create links to each array recipe with for loop (with thumbnail image?)
-    // capture user's option and send to new function displaying chosen recipe
+    //if (category !== "") {
+    // search mealdb API for recipes by category
+    // var apiUrlCat = "https://www.themealdb.com/api/json/v1/1/filter.php?c=";
+
+    // fetch(apiUrlCat + category)
+    //     .then(function (response) {
+    //         return response.json();
+    //     })
+    //     .then(function (data) {
+    //         console.log(data);
+    //         displayRecipeList(data);
+    //     })
+    // }
 }
 
+// display search results
+// capture user's option and send to new function displaying chosen recipe
 var displayRecipeList = function (data) {
+    
+    // clear previous recipe before displaying search results list
+
+
     for (var i = 0; i < data.meals.length; i++) {
-        console.log(data.meals[i].strMeal + " " + data.meals[i].idMeal);
         // add text content to heading: Choose a recipe to try!
         var listHeader = document.getElementById("list-header");
         listHeader.innerHTML = 'Choose a recipe to try!';
@@ -76,15 +92,16 @@ var displayRecipeList = function (data) {
         listDisplayBtn.textContent = data.meals[i].strMeal;
         listDisplayEl.appendChild(listDisplayLi);
         listDisplayLi.appendChild(listDisplayBtn);
+
         // addEventListener for user's click/choice from the recipe list
         listDisplayBtn.addEventListener("click", function() {
             console.log(this.id);
+
+            // send id number to getRecipe
             getRecipe(this.id);
         })
     }
 }
-
-// send id number to getRecipe [getRecipe(mealId)]
 
 
 // find recipe by id number to load recipe book/favorites
@@ -113,6 +130,12 @@ var displayRecipe = function (recipe) {
     var ingredientList = [];
     var measurementList = [];
 
+    // clear search results list
+    listDisplayEl.innerHTML = "";
+
+    // display dish title
+    recipeTitleEl.textContent = mealName;
+
     // get ingredients and measurements
     for (var i = 1; i < 21; i++) {
         var ingredients = recipe.meals[0]["strIngredient" + i];
@@ -122,6 +145,8 @@ var displayRecipe = function (recipe) {
     }
 
     // display measurements and ingredients
+    ingredientsListEl.innerHTML = "Ingredients";
+
     for (var i = 0; i < ingredientList.length; i++) {
         if (ingredientList[i] !== "") {
             var recipeAmt = document.createElement("li");
@@ -132,14 +157,7 @@ var displayRecipe = function (recipe) {
 
     // get instructions from API data
     var instructions = recipe.meals[0].strInstructions;
-    console.log(instructions);
     var paragraphs = instructions.split(".");
-
-    // display dish title
-    recipeTitleEl.textContent = mealName;
-
-    // display ingredients
-    ingredientsListEl.innerHTML = "Ingredients";
 
     // display instructions
     instructionsListEl.innerHTML = "Instructions:";
@@ -153,17 +171,39 @@ var displayRecipe = function (recipe) {
     var imgSrc = recipe.meals[0].strMealThumb;
     var mealImg = document.createElement("img");
     mealImg.setAttribute("src", imgSrc);
-
-    // display image  (can be changed. just for now as a placeholder)
     mealImg.setAttribute("width", "300px");
     mealImg.setAttribute("height", "260px");
-    resultsContainerEl.appendChild(mealImg);
+
+    // display image
+    var imageContainerEl = document.querySelector("#img-container");
+    imageContainerEl.innerHTML = "";
+    imageContainerEl.appendChild(mealImg);
 
     // create buttons: save to recipe box or back to list
-}
+    var saveBtnContainerEl = document.querySelector("#save-btn-container");
+    var addRecipe = document.createElement("button");
+    addRecipe.setAttribute("id", "btn-addRecipe");
+    addRecipe.className = "btn";
+    addRecipe.textContent = "Add to Recipe Stash";
+    var returnList = document.createElement("button");
+    returnList.setAttribute("id", "btn-returnList");
+    returnList.className = "btn";
+    returnList.textContent = "Back to Recipe List";
+    saveBtnContainerEl.appendChild(addRecipe);
+    saveBtnContainerEl.appendChild(returnList);
 
-// will delete after testing
-getRecipe("52795");
+    // when user clicks add recipe button, save to recipeStash []
+    addRecipe.addEventListener("click", function() {
+        console.log("click add");
+    });
+
+    // when user clicks return to list, send user back to search results
+    returnList.addEventListener("click", function() {
+        console.log("click return");
+        getRecipes(mainIngredient,"");
+        //displayRecipeList(mealCategory);
+    });
+}
 
 var getJoke = function (ingredient) {
     var apiUrl = "https://api.chucknorris.io/jokes/random";
@@ -199,8 +239,6 @@ var getGif = function (ingredient) {
                 gifContainerEl.appendChild(gifImg);
             }
         })
-
-
 }
 
 
