@@ -170,15 +170,25 @@ var getGif = function (ingredient) {
     // search GIPHY API for ingredient related GIFs
     var apiUrl = "https://api.giphy.com/v1/gifs/search";
 
-    fetch(apiUrl + "?=" + ingredient + "&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1")
+    fetch(apiUrl + "?q=" + ingredient + "&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1")
         .then(function (response) {
             return response.json();
         })
         .then(function (response) {
-            console.log(response.data[0]);
+            // display gif
+            console.log(response);
+            if (response.data.length === 0) {
+                console.log('Giphy could not find anything for that.');
+            } else {
+                console.log(response.data[0]);
+                var gifContainerEl = document.querySelector('#gif-container');
+                gifContainerEl.innerHTML = '';
+                var gifImg = document.createElement('img');
+                gifImg.setAttribute('src', response.data[0].images.fixed_height.url);
+                gifContainerEl.appendChild(gifImg);
+            }
         })
 
-    // display GIF
 
 }
 
