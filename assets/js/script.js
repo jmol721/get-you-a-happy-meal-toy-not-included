@@ -12,6 +12,7 @@ var recipeTitleEl = document.querySelector("#recipe-title");
 var ingredientsListEl = document.querySelector("#ingredients");
 var instructionsListEl = document.querySelector("#instructions");
 var mainIngredient = "";
+var listDisplayEl = document.getElementById("list-display");
 
 
 //modal is triggered
@@ -64,15 +65,25 @@ var getRecipes = function (ingredient, category) {
 var displayRecipeList = function (data) {
     for (var i = 0; i < data.meals.length; i++) {
         console.log(data.meals[i].strMeal + " " + data.meals[i].idMeal);
-
         // add text content to heading: Choose a recipe to try!
-
-        // create list links or buttons of options
+        var listHeader = document.getElementById("list-header");
+        listHeader.innerHTML = 'Choose a recipe to try!';
+        // create list links or buttons of options 
+        var listDisplayLi = document.createElement("li");
+        listDisplayLi.className = 'recipe-list';
+        var listDisplayBtn = document.createElement("button");
+        listDisplayBtn.setAttribute("id", data.meals[i].idMeal);
+        listDisplayBtn.textContent = data.meals[i].strMeal;
+        listDisplayEl.appendChild(listDisplayLi);
+        listDisplayLi.appendChild(listDisplayBtn);
+        // addEventListener for user's click/choice from the recipe list
+        listDisplayBtn.addEventListener("click", function() {
+            console.log(this.id);
+            getRecipe(this.id);
+        })
     }
 }
 
-
-// addEventListener for user's click/choice from the recipe list
 // send id number to getRecipe [getRecipe(mealId)]
 
 
