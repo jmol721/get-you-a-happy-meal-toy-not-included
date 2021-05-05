@@ -14,7 +14,8 @@ var instructionsListEl = document.querySelector("#instructions");
 var mainIngredient = "";
 var listDisplayEl = document.getElementById("list-display");
 
-var recipeStash = [];
+var saveBtnContainerEl = document.querySelector("#save-btn-container");
+var imageContainerEl = document.querySelector("#img-container");
 
 //modal is triggered
 openModalEl.addEventListener("click", function () {
@@ -39,6 +40,7 @@ searchRecipeEl.addEventListener("click", function () {
 
     recipeModalEl.style.display = "none";
 
+
     // use values to search API for data
     getRecipes(mainIngredient, mealCategory);
     getGif(mainIngredient);
@@ -47,7 +49,7 @@ searchRecipeEl.addEventListener("click", function () {
 
 var getRecipes = function (ingredient, category) {
     // search mealdb API for recipes with main ingredient
-    if (ingredient !== null) {
+    if (ingredient !== null && ingredient !== "") {
     var apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php";
 
     fetch(apiUrl + "?s=" + ingredient)
@@ -59,24 +61,24 @@ var getRecipes = function (ingredient, category) {
             displayRecipeList(data);
         })
     }
-    //else if (category !== "Select a Category") {
-    // search mealdb API for recipes by category
-    var apiUrlCat = "https://www.themealdb.com/api/json/v1/1/filter.php?c=";
+    else if (category !== "Select a Category") {
+        // search mealdb API for recipes by category
+        var apiUrlCat = "https://www.themealdb.com/api/json/v1/1/filter.php?c=";
 
-    fetch(apiUrlCat + category)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            displayRecipeList(data);
-        })
+        fetch(apiUrlCat + category)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+                displayRecipeList(data);
+            })
 
         getGif(category);
-     //}
-    //  else {
-    //      console.log("Enter a main ingredient or category");
-    //  }
+    }
+    else {
+        console.log("Enter a main ingredient or category");
+    }
 
 }
 
@@ -86,6 +88,16 @@ var displayRecipeList = function (data) {
 
     // clear previous search results list
     listDisplayEl.innerHTML = "";
+
+    // clear previous recipe guide
+    recipeTitleEl.innerHTML = '';
+    ingredientsListEl.innerHTML = '';
+    instructionsListEl.innerHTML = '';
+    //clear save button
+    saveBtnContainerEl.innerHTML = '';
+    //clear image
+    imageContainerEl.innerHTML = '';
+
 
     for (var i = 0; i < data.meals.length; i++) {
         // add text content to heading: Choose a recipe to try!
@@ -103,6 +115,9 @@ var displayRecipeList = function (data) {
         // addEventListener for user's click/choice from the recipe list
         listDisplayBtn.addEventListener("click", function() {
             console.log(this.id);
+
+            //clear header
+            listHeader.innerHTML = '';
 
             // send id number to getRecipe
             getRecipe(this.id);
@@ -182,12 +197,10 @@ var displayRecipe = function (recipe) {
     mealImg.setAttribute("height", "260px");
 
     // display image
-    var imageContainerEl = document.querySelector("#img-container");
     imageContainerEl.innerHTML = "";
     imageContainerEl.appendChild(mealImg);
 
     // create buttons: save to recipe box or back to list
-    var saveBtnContainerEl = document.querySelector("#save-btn-container");
     var addRecipe = document.createElement("button");
     addRecipe.setAttribute("id", "btn-addRecipe");
     addRecipe.className = "btn";
@@ -202,11 +215,14 @@ var displayRecipe = function (recipe) {
     // when user clicks add recipe button, save to recipeStash []
     addRecipe.addEventListener("click", function() {
         console.log("click add");
+
         // create recipe object
         var recipeObj = { name: mealName, id: mealId};
         // push object to recipeStash []
-        recipeStash.push(recipeObj);
-        console.log("recipe Stash", recipeStash);
+        // recipeStash.push(recipeObj);
+        // console.log("recipe Stash", recipeStash);
+
+        saveRecipes(recipeObj);
     });
 
     // when user clicks return to list, send user back to search results
@@ -220,6 +236,9 @@ var displayRecipe = function (recipe) {
 
         getRecipes(mainIngredient,"");
     });
+
+    //call back local storage function saveRecipes
+    
 }
 
 var getJoke = function (ingredient) {
@@ -258,13 +277,55 @@ var getGif = function (ingredient) {
         })
 }
 
+//load recipes from Recipe Stash
+var previousRecipes = function(event) {
+    console.log('previous recipe', event);
+    console.log('event target', event.target);
+
+    getRecipe(event.target.id);
+}
 
 // save recipe to localStorage
-var saveRecipes = function () {
+var saveRecipes = function (recipeObj) {
+    var savedRecipies = [];
+    var localRecipeStash = localStorage.getItem('saved-recipes');
+    if (localRecipeStash !== null) {
+        savedRecipies = JSON.parse(localRecipeStash);
+    }
+    savedRecipies.push(recipeObj);
+    localStorage.setItem('saved-recipes', JSON.stringify(savedRecipies));
 
+    var recipeList = document.getElementById("recipe-box");
+    var recipeDivs = document.createElement('div');
+    recipeDivs.textContent = recipeObj.name;
+    recipeDivs.setAttribute('id', recipeObj.id);
+    recipeDivs.onclick = function(event) {
+        previousRecipes(event);
+    }
+
+    recipeList.appendChild(recipeDivs);
 }
 
 // load recipes from localStorate
 var loadRecipes = function () {
+    var preloadedRecipeList = JSON.parse(localStorage.getItem('saved-recipes'));
+    var recipeList = document.getElementById("recipe-box");
+    
 
+    if (preloadedRecipeList !== null) {
+        for (var i = 0; i < preloadedRecipeList.length; i++) {
+            var recipeDivs = document.createElement('div');
+            recipeDivs.textContent = preloadedRecipeList[i].name;
+            recipeDivs.setAttribute('id', preloadedRecipeList[i].id)
+            console.log('new', recipeDivs);
+            console.log(preloadedRecipeList[i].id);
+            recipeDivs.onclick = function(event) {
+                previousRecipes(event);
+            }
+
+            recipeList.appendChild(recipeDivs);
+        }
+    }
 }
+
+loadRecipes();
