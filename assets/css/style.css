@@ -116,3 +116,48 @@ form label {
 #list-display, #ingredients {
   list-style: none;
 }
+
+#list-header {
+  border: solid 1px black;
+  padding: 1%;
+  border-radius: 12px;
+  background-color: #DEB887;
+  margin: 1%;
+  text-align: center;
+}
+
+#joke-div {
+  border: solid 1px black;
+  padding: 1%;
+  border-radius: 12px;
+  background-color: #DEB887;
+  margin: 2% 1% 1% 1%;
+  text-align: center;
+}
+
+.modal-title {
+  border: solid 1px black;
+  padding: 1%;
+  border-radius: 12px;
+  background-color: #DEB887;
+  margin: 1%;
+}
+
+.stash-box-recipes {
+  border: solid 1px black;
+  padding: 1%;
+  border-radius: 12px;
+  background-color: #DEB887;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.recipe-list {
+  border: solid 1px black;
+  padding: 1%;
+  border-radius: 12px;
+  background-color: #DEB887;
+  text-align: center;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}

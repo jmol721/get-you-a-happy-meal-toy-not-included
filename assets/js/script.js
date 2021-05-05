@@ -299,6 +299,7 @@ var saveRecipes = function (recipeObj) {
     var recipeDivs = document.createElement('div');
     recipeDivs.textContent = recipeObj.name;
     recipeDivs.setAttribute('id', recipeObj.id);
+    recipeDivs.setAttribute('class', 'stash-box-recipes');
     recipeDivs.onclick = function(event) {
         previousRecipes(event);
     }
@@ -317,6 +318,7 @@ var loadRecipes = function () {
             var recipeDivs = document.createElement('div');
             recipeDivs.textContent = preloadedRecipeList[i].name;
             recipeDivs.setAttribute('id', preloadedRecipeList[i].id)
+            recipeDivs.setAttribute('class', 'stash-box-recipes');
             console.log('new', recipeDivs);
             console.log(preloadedRecipeList[i].id);
             recipeDivs.onclick = function(event) {
