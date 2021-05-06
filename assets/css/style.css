@@ -148,8 +148,8 @@ form label {
   padding: 1%;
   border-radius: 12px;
   background-color: #DEB887;
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin: 2%;
+  font-style: italic;
 }
 
 .recipe-list {
@@ -160,4 +160,22 @@ form label {
   text-align: center;
   margin-top: 1%;
   margin-bottom: 1%;
+}
+
+#recipe-box h3 {
+  border: solid 1px black;
+  padding: 1%;
+  border-radius: 12px;
+  background-color: #DEB887;
+  margin: 2%;
+}
+
+.gif-img {
+  border: solid 1px black;
+  padding: 3%;
+  border-radius: 12px;
+  background-color: #DEB887;
+  text-align: center;
+  margin: 2%;
+
 }
