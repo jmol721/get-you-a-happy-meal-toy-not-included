@@ -4,6 +4,10 @@
   box-sizing: border-box
 }
 
+body {
+  background-color: burlywood;
+}
+
 /* hero section */
 
 .hero {
@@ -152,6 +156,10 @@ form label {
   font-style: italic;
 }
 
+.stash-box-recipes:hover {
+  color: white;
+}
+
 .recipe-list {
   border: solid 1px black;
   padding: 1%;
@@ -160,6 +168,10 @@ form label {
   text-align: center;
   margin-top: 1%;
   margin-bottom: 1%;
+}
+
+.recipe-list:hover {
+  color: white;
 }
 
 #recipe-box h3 {
