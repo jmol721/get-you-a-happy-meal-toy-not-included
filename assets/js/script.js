@@ -105,7 +105,8 @@ var displayRecipeList = function (data) {
         listHeader.innerHTML = 'Choose a recipe to try!';
         // create list links or buttons of options 
         var listDisplayLi = document.createElement("li");
-        listDisplayLi.className = 'recipe-list';
+        // listDisplayLi.className = 'recipe-list';
+        listDisplayLi.setAttribute('class', 'recipe-list recipe-list:hover');
         var listDisplayBtn = document.createElement("button");
         listDisplayBtn.setAttribute("id", data.meals[i].idMeal);
         listDisplayBtn.textContent = data.meals[i].strMeal;
