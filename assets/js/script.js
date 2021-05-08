@@ -106,7 +106,7 @@ var displayRecipeList = function (data) {
         // create list links or buttons of options 
         var listDisplayLi = document.createElement("li");
         // listDisplayLi.className = 'recipe-list';
-        listDisplayLi.setAttribute('class', 'recipe-list recipe-list:hover');
+        listDisplayLi.setAttribute('class', 'recipe-list');
         var listDisplayBtn = document.createElement("button");
         listDisplayBtn.setAttribute("id", data.meals[i].idMeal);
         listDisplayBtn.textContent = data.meals[i].strMeal;
@@ -168,7 +168,7 @@ var displayRecipe = function (recipe) {
     }
 
     // display measurements and ingredients
-    ingredientsListEl.innerHTML = "Ingredients";
+    ingredientsListEl.innerHTML = "<b>Ingredients:</b>";
 
     for (var i = 0; i < ingredientList.length; i++) {
         if (ingredientList[i] !== null) {
@@ -183,8 +183,8 @@ var displayRecipe = function (recipe) {
     var paragraphs = instructions.split(".");
 
     // display instructions
-    instructionsListEl.innerHTML = "Instructions:";
-    for (var i = 0; i < paragraphs.length; i++) {
+    instructionsListEl.innerHTML = "<b>Instructions:</b>";
+    for (var i = 0; i < paragraphs.length-1; i++) {
         var instructions = document.createElement("li");
         instructions.textContent = paragraphs[i];
         instructionsListEl.appendChild(instructions);
@@ -194,8 +194,8 @@ var displayRecipe = function (recipe) {
     var imgSrc = recipe.meals[0].strMealThumb;
     var mealImg = document.createElement("img");
     mealImg.setAttribute("src", imgSrc);
-    mealImg.setAttribute("width", "300px");
-    mealImg.setAttribute("height", "260px");
+    mealImg.setAttribute("width", "350px");
+    mealImg.setAttribute("height", "280px");
 
     // display image
     imageContainerEl.innerHTML = "";
@@ -237,9 +237,6 @@ var displayRecipe = function (recipe) {
 
         getRecipes(mainIngredient,"");
     });
-
-    //call back local storage function saveRecipes
-    
 }
 
 var getJoke = function (ingredient) {
@@ -258,7 +255,7 @@ var getGif = function (ingredient) {
     // search GIPHY API for ingredient related GIFs
     var apiUrl = "https://api.giphy.com/v1/gifs/search";
 
-    fetch(apiUrl + "?q=" + ingredient + "&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1")
+    fetch(apiUrl + "?q=" + ingredient + "&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=20")
         .then(function (response) {
             return response.json();
         })
@@ -272,7 +269,8 @@ var getGif = function (ingredient) {
                 var gifContainerEl = document.querySelector('#gif-container');
                 gifContainerEl.innerHTML = '';
                 var gifImg = document.createElement('img');
-                gifImg.setAttribute('src', response.data[0].images.fixed_height.url);
+                var randomGif = Math.floor(Math.random()*response.data.length);
+                gifImg.setAttribute('src', response.data[randomGif].images.fixed_height.url);
                 // gifImg.setAttribute('class', 'gif-img');
                 gifContainerEl.appendChild(gifImg);
             }
@@ -285,6 +283,7 @@ var previousRecipes = function(event) {
     console.log('event target', event.target);
 
     getRecipe(event.target.id);
+    saveBtnContainerEl.innerHTML = "";
 }
 
 // save recipe to localStorage
