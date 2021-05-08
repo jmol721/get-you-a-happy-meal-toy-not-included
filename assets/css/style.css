@@ -122,7 +122,7 @@ form label {
 }
 
 #btn-open-modal:hover {
-  background-color:#641810;
+  background-color: rgb(6, 105, 89);
 }
 
 #btn-open-modal {
@@ -233,6 +233,11 @@ form label {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+#btn-addRecipe:hover, #btn-returnList:hover {
+  font-weight: bold;
+  background-color: rgb(6, 105, 89);
 }
 
 #gif-container {
