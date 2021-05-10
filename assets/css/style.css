@@ -186,10 +186,6 @@ form label {
   background-color: rgb(6, 105, 89);
 }
 
-.stash-box-recipes:hover {
-  color: white;
-}
-
 .recipe-list {
   border: solid 1px black;
   padding: 1%;
@@ -214,10 +210,6 @@ form label {
 
 #list-display li:hover {
   background-color: rgb(6, 105, 89);
-}
-
-.recipe-list:hover {
-  color: white;
 }
 
 #recipe-box h3 {

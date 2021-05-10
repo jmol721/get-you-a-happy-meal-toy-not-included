@@ -12,6 +12,7 @@ var recipeTitleEl = document.querySelector("#recipe-title");
 var ingredientsListEl = document.querySelector("#ingredients");
 var instructionsListEl = document.querySelector("#instructions");
 var mainIngredient = "";
+var mealCategory = "";
 var listDisplayEl = document.getElementById("list-display");
 
 var saveBtnContainerEl = document.querySelector("#save-btn-container");
@@ -35,7 +36,7 @@ closeModalEl.addEventListener("click", function () {
 searchRecipeEl.addEventListener("click", function () {
     // get user input values
     mainIngredient = modalMainIngredientEl.value;
-    var mealCategory = modalMealCategoryEl.value;
+    mealCategory = modalMealCategoryEl.value;
     console.log(mainIngredient, mealCategory);
 
     recipeModalEl.style.display = "none";
@@ -235,7 +236,7 @@ var displayRecipe = function (recipe) {
         instructionsListEl.innerHTML = "";
         saveBtnContainerEl.innerHTML = "";
 
-        getRecipes(mainIngredient,"");
+        getRecipes(mainIngredient, mealCategory);
     });
 }
 
